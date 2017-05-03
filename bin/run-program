@@ -1,0 +1,5 @@
+export PROG=$1
+shift 1
+ID=$(docker run -P -d --rm $PROG)
+PORT=$(docker inspect $ID | grep HostPort | cut -f 2 -d : | awk '{$1=$1};1' | sed 's/[^0-9]*//g')
+xpra attach tcp/localhost:$PORT
